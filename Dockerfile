@@ -12,12 +12,17 @@ RUN apt update -y && apt install -y \
     cvmfs-server \
     cvmfs-config-default
 
-RUN echo "user_allow_other" >> /etc/fuse.conf \
-    && echo -e "\nCVMFS_HTTP_PROXY=DIRECT\n" >> /etc/cvmfs/default.conf
+RUN echo "user_allow_other" >> /etc/fuse.conf 
+RUN echo -e "\nCVMFS_HTTP_PROXY=DIRECT\n" >> /etc/cvmfs/default.conf
 
-COPY ./contents/common.infn.it.pub /etc/cvmfs/keys/infn.it/common.infn.it.pub
-COPY ./contents/default.local /etc/cvmfs/default.local
-COPY ./contents/infn.it.conf /etc/cvmfs/domain.d/infn.it.conf
+ARG WP="WP6" 
+ARG WP="WP1"
+
+#RUN if [ "${WP}" = "WP6" ]; then echo -e "\nCVMFS_HTTP_PROXY=DIRECT\n" >> /etc/cvmfs/default.conf; fi
+
+COPY ./contents/${WP}/common.infn.it.pub /etc/cvmfs/keys/infn.it/common.infn.it.pub
+COPY ./contents/${WP}/default.local /etc/cvmfs/default.local
+COPY ./contents/${WP}/infn.it.conf /etc/cvmfs/domain.d/infn.it.conf
 
 COPY ./contents/startup.sh /opt/startup.sh
 
