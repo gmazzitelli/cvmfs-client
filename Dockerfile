@@ -15,10 +15,8 @@ RUN apt update -y && apt install -y \
 RUN echo "user_allow_other" >> /etc/fuse.conf 
 RUN echo -e "\nCVMFS_HTTP_PROXY=DIRECT\n" >> /etc/cvmfs/default.conf
 
-ARG WP="WP6" 
+#ARG WP="WP6" 
 ARG WP="WP1"
-
-#RUN if [ "${WP}" = "WP6" ]; then echo -e "\nCVMFS_HTTP_PROXY=DIRECT\n" >> /etc/cvmfs/default.conf; fi
 
 COPY ./contents/${WP}/common.infn.it.pub /etc/cvmfs/keys/infn.it/common.infn.it.pub
 COPY ./contents/${WP}/default.local /etc/cvmfs/default.local
